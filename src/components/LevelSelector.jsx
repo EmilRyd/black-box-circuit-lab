@@ -1,7 +1,7 @@
 const LEVELS = [
-  { id: 1, label: 'Learning to Swim' },
-  { id: 2, label: 'Trying Out the Waters' },
-  { id: 3, label: 'Exploring the Deep' },
+  { id: 1, label: '1. Learning to Swim' },
+  { id: 2, label: '2. Trying Out the Waters' },
+  { id: 3, label: '3. Exploring the Deep' },
 ];
 
 export default function LevelSelector({ level, onChange }) {

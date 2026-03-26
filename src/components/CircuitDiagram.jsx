@@ -31,7 +31,7 @@ export default function CircuitDiagram({ state }) {
         {isOhmmeter ? (
           <>
             {/* Ohmmeter in the middle top */}
-            <line x1="180" y1="60" x2="220" y2="60" stroke="#374151" strokeWidth="2" />
+            <line x1="180" y1="60" x2="238" y2="60" stroke="#374151" strokeWidth="2" />
             <circle cx="260" cy="60" r="22" fill="#ecfdf5" stroke="#10b981" strokeWidth="2" />
             <text x="260" y="65" textAnchor="middle" fill="#10b981" fontSize="16" fontWeight="bold">Ω</text>
             <line x1="282" y1="60" x2="340" y2="60" stroke="#374151" strokeWidth="2" />

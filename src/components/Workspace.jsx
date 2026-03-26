@@ -3,7 +3,6 @@ import BlackBox from './BlackBox';
 import CircuitControls from './CircuitControls';
 import CircuitDiagram from './CircuitDiagram';
 import MeasurementLog from './MeasurementLog';
-import HintsPanel from './HintsPanel';
 import { computeLevel12, computeLevel3, getHiddenResistance, formatValue } from '../physics';
 
 export default function Workspace({ level, puzzle }) {
@@ -116,7 +115,6 @@ export default function Workspace({ level, puzzle }) {
             onMeasureCircuit={handleMeasureCircuit}
             lastResult={lastResult}
           />
-          <HintsPanel level={level} />
         </div>
       </div>
 
