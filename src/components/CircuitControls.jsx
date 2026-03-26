@@ -1,3 +1,5 @@
+import { formatValue } from '../physics';
+
 const BATTERY_PRESETS = [1.5, 3, 4.5, 9];
 const PAIR_OPTIONS_12 = ['A-B', 'B-C', 'A-C'];
 
@@ -173,11 +175,53 @@ export default function CircuitControls({
         </>
       )}
 
+      {lastResult && <ReadoutDisplay lastResult={lastResult} level={level} mode={mode} />}
+
       {lastResult && lastResult.warning && (
         <div className="px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm">
           ⚠ {lastResult.warning}
         </div>
       )}
+    </div>
+  );
+}
+
+function ReadoutDisplay({ lastResult, level, mode }) {
+  if (lastResult.type === 'ohmmeter') {
+    return (
+      <div className="rounded-lg bg-gray-950 p-4 text-center border-2 border-emerald-500/30">
+        <p className="text-xs text-emerald-400 uppercase tracking-widest mb-1 font-medium">Ohmmeter Reading</p>
+        <p className="text-3xl font-mono font-bold text-emerald-400">
+          {formatValue(lastResult.rHidden, 'Ω')}
+        </p>
+      </div>
+    );
+  }
+
+  if (lastResult.isOpenCircuit) {
+    return (
+      <div className="rounded-lg bg-gray-950 p-4 text-center border-2 border-blue-500/30">
+        <p className="text-xs text-blue-400 uppercase tracking-widest mb-1 font-medium">Open-Circuit Voltage</p>
+        <p className="text-3xl font-mono font-bold text-blue-400">
+          {formatValue(lastResult.vBox, 'V')}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-lg bg-gray-950 p-4 border-2 border-gray-700">
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-3 font-medium text-center">Instrument Readings</p>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="text-center">
+          <p className="text-[10px] text-red-400 uppercase tracking-widest mb-0.5">Ammeter</p>
+          <p className="text-xl font-mono font-bold text-red-400">{lastResult.displayCurrent}</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] text-blue-400 uppercase tracking-widest mb-0.5">Voltmeter — {lastResult.displayVoltLabel}</p>
+          <p className="text-xl font-mono font-bold text-blue-400">{lastResult.displayVolt}</p>
+        </div>
+      </div>
     </div>
   );
 }

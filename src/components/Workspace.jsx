@@ -85,7 +85,7 @@ export default function Workspace({ level, puzzle }) {
       voltReading,
     };
     setMeasurements(m => [...m, entry]);
-    setLastResult(result);
+    setLastResult({ ...result, displayVolt: voltReading, displayVoltLabel: voltAcross, displayCurrent: currentDisplay });
   }, [level, puzzle, terminalPair, vBattery, rExternal, voltmeterTarget]);
 
   const circuitState = {

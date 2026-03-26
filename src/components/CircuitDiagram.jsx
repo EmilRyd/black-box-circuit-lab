@@ -77,9 +77,19 @@ export default function CircuitDiagram({ state }) {
               </g>
             )}
 
-            {/* Ammeter */}
-            <circle cx="320" cy="60" r="14" fill="#fef2f2" stroke="#ef4444" strokeWidth="2" />
-            <text x="320" y="65" textAnchor="middle" fill="#ef4444" fontSize="13" fontWeight="bold">A</text>
+            {/* Ammeter — centered on top wire */}
+            {(() => {
+              const ax = hasExtBat && hasExtRes ? 320
+                : hasExtBat ? 300
+                : hasExtRes ? 300
+                : 260;
+              return (
+                <>
+                  <circle cx={ax} cy="60" r="14" fill="#fef2f2" stroke="#ef4444" strokeWidth="2" />
+                  <text x={ax} y="65" textAnchor="middle" fill="#ef4444" fontSize="13" fontWeight="bold">A</text>
+                </>
+              );
+            })()}
 
             {/* Voltmeter */}
             {(() => {
@@ -96,8 +106,8 @@ export default function CircuitDiagram({ state }) {
               }
               return (
                 <g>
-                  <line x1={vx - 30} y1={vy2} x2={vx - 10} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
-                  <line x1={vx + 10} y1={vy2} x2={vx + 30} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  <line x1={vx - 50} y1={vy2} x2={vx - 14} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  <line x1={vx + 14} y1={vy2} x2={vx + 50} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
                   <circle cx={vx} cy={vy2} r="14" fill="#eff6ff" stroke="#3b82f6" strokeWidth="2" />
                   <text x={vx} y={vy2 + 5} textAnchor="middle" fill="#3b82f6" fontSize="13" fontWeight="bold">V</text>
                 </g>
