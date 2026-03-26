@@ -3,7 +3,6 @@ import BlackBox from './BlackBox';
 import CircuitControls from './CircuitControls';
 import CircuitDiagram from './CircuitDiagram';
 import MeasurementLog from './MeasurementLog';
-import AnswerPanel from './AnswerPanel';
 import HintsPanel from './HintsPanel';
 import { computeLevel12, computeLevel3, getHiddenResistance, formatValue } from '../physics';
 
@@ -13,9 +12,8 @@ export default function Workspace({ level, puzzle }) {
   const [rExternal, setRExternal] = useState(0);
   const [voltmeterTarget, setVoltmeterTarget] = useState('box');
   const [measurements, setMeasurements] = useState([]);
-  const [solved, setSolved] = useState(false);
   const [lastResult, setLastResult] = useState(null);
-  const [mode, setMode] = useState('circuit');
+  const [mode, setMode] = useState(level === 1 ? 'ohmmeter' : 'circuit');
 
   const handleMeasureResistance = useCallback(() => {
     const rHidden = getHiddenResistance(puzzle, terminalPair);
@@ -117,9 +115,7 @@ export default function Workspace({ level, puzzle }) {
             onMeasureOpenCircuit={handleMeasureOpenCircuit}
             onMeasureCircuit={handleMeasureCircuit}
             lastResult={lastResult}
-            solved={solved}
           />
-          <AnswerPanel level={level} puzzle={puzzle} solved={solved} setSolved={setSolved} measurementCount={measurements.length} />
           <HintsPanel level={level} />
         </div>
       </div>

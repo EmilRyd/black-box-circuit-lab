@@ -9,7 +9,7 @@ export default function CircuitControls({
   voltmeterTarget, setVoltmeterTarget,
   mode, setMode,
   onMeasureResistance, onMeasureOpenCircuit, onMeasureCircuit,
-  lastResult, solved,
+  lastResult,
 }) {
   const isLevel3 = level === 3;
 
@@ -39,49 +39,24 @@ export default function CircuitControls({
       )}
 
       {level === 1 && (
-        <div className="flex gap-2">
-          <button
-            onClick={() => setMode('ohmmeter')}
-            className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors
-              ${mode === 'ohmmeter'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'
-              }`}
-          >
-            Ω Resistance Meter
-          </button>
-          <button
-            onClick={() => setMode('circuit')}
-            className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors
-              ${mode === 'circuit'
-                ? 'bg-gray-900 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-          >
-            V/I Circuit
-          </button>
-        </div>
+        <button
+          onClick={onMeasureResistance}
+          className="w-full px-4 py-3 rounded-lg text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+        >
+          Measure Resistance ({terminalPair})
+        </button>
       )}
 
       {isLevel3 && (
         <button
           onClick={onMeasureOpenCircuit}
-          disabled={solved}
-          className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors disabled:opacity-50"
+          className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors"
         >
           Measure Open-Circuit Voltage (voltmeter only, no external circuit)
         </button>
       )}
 
-      {level === 1 && mode === 'ohmmeter' ? (
-        <button
-          onClick={onMeasureResistance}
-          disabled={solved}
-          className="w-full px-4 py-3 rounded-lg text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors disabled:opacity-50"
-        >
-          Measure Resistance ({terminalPair})
-        </button>
-      ) : (
+      {level !== 1 && (
         <>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -163,15 +138,12 @@ export default function CircuitControls({
             </div>
           </div>
 
-          {!(level === 1 && mode === 'ohmmeter') && (
-            <button
-              onClick={onMeasureCircuit}
-              disabled={solved}
-              className="w-full px-4 py-3 rounded-lg text-sm font-semibold bg-gray-900 text-white hover:bg-gray-800 transition-colors disabled:opacity-50"
-            >
-              Measure
-            </button>
-          )}
+          <button
+            onClick={onMeasureCircuit}
+            className="w-full px-4 py-3 rounded-lg text-sm font-semibold bg-gray-900 text-white hover:bg-gray-800 transition-colors"
+          >
+            Measure
+          </button>
         </>
       )}
 

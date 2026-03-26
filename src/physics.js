@@ -1,16 +1,11 @@
-const E12_100_1000 = [100, 120, 150, 180, 220, 270, 330, 390, 470, 560, 680, 820, 1000];
-const E12_10_100 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82, 100];
-const BATTERY_VALUES = [1.5, 3.0, 4.5, 6.0, 9.0];
+export const FIXED_PUZZLES = {
+  1: { r1: 330, r2: 470 },
+  2: { r1: 220, r2: 560 },
+  3: { emf: 4.5, r: 47 },
+};
 
-function pick(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-export function generatePuzzle(level) {
-  if (level === 1 || level === 2) {
-    return { r1: pick(E12_100_1000), r2: pick(E12_100_1000) };
-  }
-  return { emf: pick(BATTERY_VALUES), r: pick(E12_10_100) };
+export function getPuzzle(level) {
+  return FIXED_PUZZLES[level];
 }
 
 export function getHiddenResistance(puzzle, pair) {

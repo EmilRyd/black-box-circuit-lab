@@ -1,7 +1,7 @@
 const LEVELS = [
-  { id: 1, label: 'Level 1: Easy', desc: 'Resistance meter available' },
-  { id: 2, label: 'Level 2: Medium', desc: 'No resistance meter!' },
-  { id: 3, label: 'Level 3: Difficult', desc: 'Hidden battery + resistor' },
+  { id: 1, label: 'Learning to Swim' },
+  { id: 2, label: 'Trying Out the Waters' },
+  { id: 3, label: 'Exploring the Deep' },
 ];
 
 export default function LevelSelector({ level, onChange }) {
@@ -18,7 +18,6 @@ export default function LevelSelector({ level, onChange }) {
             }`}
         >
           <span className="block">{lv.label}</span>
-          <span className="block text-xs mt-0.5 font-normal text-gray-400">{lv.desc}</span>
           {level === lv.id && (
             <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gray-900 rounded-t" />
           )}

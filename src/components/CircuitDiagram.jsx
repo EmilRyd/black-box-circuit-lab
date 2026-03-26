@@ -91,25 +91,33 @@ export default function CircuitDiagram({ state }) {
               );
             })()}
 
-            {/* Voltmeter */}
+            {/* Voltmeter with leads to both wires */}
             {(() => {
-              let vx, vy1, vy2;
+              const leftWire = 180;
+              const rightWire = 340;
+              let vx, vy, wireY;
               if (voltmeterTarget === 'box') {
-                vx = 260; vy1 = 205; vy2 = 180;
+                vx = 260; vy = 180; wireY = 202;
               } else if (voltmeterTarget === 'resistor' && hasExtRes) {
                 const rx = hasExtBat ? 275 : 235;
-                vx = rx; vy1 = 80; vy2 = 105;
+                vx = rx; vy = 105; wireY = 60;
               } else if (voltmeterTarget === 'battery' && hasExtBat) {
-                vx = 218; vy1 = 80; vy2 = 105;
+                vx = 218; vy = 105; wireY = 60;
               } else {
-                vx = 260; vy1 = 205; vy2 = 180;
+                vx = 260; vy = 180; wireY = 202;
               }
+              const isBelow = vy > wireY;
               return (
                 <g>
-                  <line x1={vx - 50} y1={vy2} x2={vx - 14} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
-                  <line x1={vx + 14} y1={vy2} x2={vx + 50} y2={vy2} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
-                  <circle cx={vx} cy={vy2} r="14" fill="#eff6ff" stroke="#3b82f6" strokeWidth="2" />
-                  <text x={vx} y={vy2 + 5} textAnchor="middle" fill="#3b82f6" fontSize="13" fontWeight="bold">V</text>
+                  {/* Left lead: vertical stub down/up from wire, then horizontal to voltmeter */}
+                  <line x1={leftWire} y1={wireY} x2={leftWire} y2={vy} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  <line x1={leftWire} y1={vy} x2={vx - 14} y2={vy} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  {/* Right lead: horizontal from voltmeter, then vertical stub to wire */}
+                  <line x1={vx + 14} y1={vy} x2={rightWire} y2={vy} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  <line x1={rightWire} y1={vy} x2={rightWire} y2={wireY} stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 2" />
+                  {/* Voltmeter circle */}
+                  <circle cx={vx} cy={vy} r="14" fill="#eff6ff" stroke="#3b82f6" strokeWidth="2" />
+                  <text x={vx} y={vy + 5} textAnchor="middle" fill="#3b82f6" fontSize="13" fontWeight="bold">V</text>
                 </g>
               );
             })()}
