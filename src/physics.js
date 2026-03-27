@@ -55,12 +55,10 @@ export function computeLevel3(puzzle, rExternal, vExtBattery, isOpenCircuit) {
   const hasNoExtBattery = !vExtBattery || vExtBattery === 0;
   let warning = null;
 
-  if (current > 1) {
-    warning = 'Very high current! In a real circuit, this could damage components.';
-  }
-
-  if (hasNoExtResistor && hasNoExtBattery) {
+  if (hasNoExtResistor && hasNoExtBattery && current > 1) {
     warning = 'Short circuit through ammeter! In real life this would blow a fuse.';
+  } else if (current > 1) {
+    warning = 'Very high current! In a real circuit, this could damage components.';
   }
 
   return {
