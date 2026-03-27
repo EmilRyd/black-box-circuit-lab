@@ -11,13 +11,15 @@ export default function CircuitControls({
   onMeasureResistance, onMeasureOpenCircuit, onMeasureCircuit,
   lastResult,
 }) {
-  const isLevel3 = level === 3;
+  const hasTerminalPairs = level <= 2;
+  const hasOpenCircuit = level >= 3;
+  const hasOptionalBattery = level >= 3;
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
       <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Workbench</h2>
 
-      {!isLevel3 && (
+      {hasTerminalPairs && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Terminal Pair</label>
           <div className="flex gap-2">
@@ -47,7 +49,7 @@ export default function CircuitControls({
         </button>
       )}
 
-      {isLevel3 && (
+      {hasOpenCircuit && (
         <button
           onClick={onMeasureOpenCircuit}
           className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 transition-colors"
@@ -61,7 +63,7 @@ export default function CircuitControls({
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               External Battery (V)
-              {isLevel3 && <span className="text-gray-400 font-normal"> — optional</span>}
+              {hasOptionalBattery && <span className="text-gray-400 font-normal"> — optional</span>}
             </label>
             <div className="flex gap-2 flex-wrap mb-2">
               {BATTERY_PRESETS.map(v => (
@@ -119,7 +121,7 @@ export default function CircuitControls({
             <label className="block text-sm font-medium text-gray-700 mb-2">Voltmeter Across</label>
             <div className="flex gap-2 flex-wrap">
               {[
-                { id: 'box', label: isLevel3 ? 'Box (+/−)' : `Box (${terminalPair})` },
+                { id: 'box', label: level >= 3 ? 'Box (+/−)' : `Box (${terminalPair})` },
                 { id: 'resistor', label: 'Ext. Resistor' },
                 { id: 'battery', label: 'Ext. Battery' },
               ].map(t => (

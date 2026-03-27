@@ -1,10 +1,9 @@
 export default function CircuitDiagram({ state }) {
-  const { level, terminalPair, vBattery, rExternal, voltmeterTarget, mode } = state;
-  const isLevel3 = level === 3;
+  const { level, terminalPair, vBattery, rExternal, voltmeterTarget, mode, s1, s2 } = state;
   const isOhmmeter = level === 1 && mode === 'ohmmeter';
 
-  const leftLabel = isLevel3 ? '+' : terminalPair.split('-')[0];
-  const rightLabel = isLevel3 ? '−' : terminalPair.split('-')[1];
+  const leftLabel = level >= 3 ? '+' : terminalPair.split('-')[0];
+  const rightLabel = level >= 3 ? '−' : terminalPair.split('-')[1];
 
   const hasExtBat = vBattery > 0;
   const hasExtRes = rExternal > 0;
@@ -15,7 +14,17 @@ export default function CircuitDiagram({ state }) {
       <svg viewBox="0 0 520 300" className="w-full">
         {/* Black box at bottom */}
         <rect x="160" y="210" width="200" height="60" rx="8" fill="#1f2937" />
-        <text x="260" y="245" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="monospace">BLACK BOX</text>
+        <text x="260" y={level === 4 ? "237" : "245"} textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="monospace">BLACK BOX</text>
+        {level === 4 && (
+          <>
+            <text x="230" y="258" textAnchor="middle" fill={s1 ? '#10b981' : '#6b7280'} fontSize="9" fontWeight="600">
+              S1: {s1 ? 'ON' : 'OFF'}
+            </text>
+            <text x="290" y="258" textAnchor="middle" fill={s2 ? '#10b981' : '#6b7280'} fontSize="9" fontWeight="600">
+              S2: {s2 ? 'ON' : 'OFF'}
+            </text>
+          </>
+        )}
 
         {/* Terminal labels on box */}
         <circle cx="180" cy="210" r="8" fill="#dc2626" />
@@ -106,7 +115,6 @@ export default function CircuitDiagram({ state }) {
               } else {
                 vx = 260; vy = 180; wireY = 202;
               }
-              const isBelow = vy > wireY;
               return (
                 <g>
                   {/* Left lead: vertical stub down/up from wire, then horizontal to voltmeter */}

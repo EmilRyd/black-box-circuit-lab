@@ -40,7 +40,9 @@ export default function App() {
           <div className="px-4 py-3 rounded-lg bg-violet-50 border border-violet-200 text-violet-800 text-sm font-mono">
             <span className="font-semibold">Teacher mode</span>
             {' — '}
-            {level === 3
+            {level === 4
+              ? <>R₁ = {puzzle.r1} Ω, ε = {puzzle.emf} V, R₂ = {puzzle.r2} Ω</>
+              : level === 3
               ? <>ε = {puzzle.emf} V, r = {puzzle.r} Ω</>
               : <>R₁ = {puzzle.r1} Ω, R₂ = {puzzle.r2} Ω</>
             }
